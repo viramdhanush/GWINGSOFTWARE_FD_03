@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+.container {
+    margin: 100px auto;
+    padding: 20px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+.scoreboard p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.choices button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.choices button:hover {
+    background-color: #0056b3;
+}
+
+.result p {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+    </style>
+    <div class="container">
+        <h1>Rock-Paper-Scissors</h1>
+        <div class="scoreboard">
+            <p>Player: <span id="player-score">0</span></p>
+            <p>Computer: <span id="computer-score">0</span></p>
+        </div>
+
+        <div class="choices">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+        </div>
+
+        <div class="result">
+            <p id="result-message">Make your move!</p>
+        </div>
+    </div>
+    <script>
+        let playerScore = 0;
+let computerScore = 0;
+
+const choices = ["rock", "paper", "scissors"];
+const resultMessage = document.getElementById("result-message");
+const playerScoreDisplay = document.getElementById("player-score");
+const computerScoreDisplay = document.getElementById("computer-score");
+
+document.getElementById("rock").addEventListener("click", () => playRound("rock"));
+document.getElementById("paper").addEventListener("click", () => playRound("paper"));
+document.getElementById("scissors").addEventListener("click", () => playRound("scissors"));
+
+function playRound(playerChoice) {
+    const computerChoice = getComputerChoice();
+    const result = getResult(playerChoice, computerChoice);
+    
+    if (result === "win") {
+        playerScore++;
+        resultMessage.textContent = `You win! ${playerChoice} beats ${computerChoice}.`;
+    } else if (result === "lose") {
+        computerScore++;
+        resultMessage.textContent = `You lose! ${computerChoice} beats ${playerChoice}.`;
+    } else {
+        resultMessage.textContent = `It's a draw! Both chose ${playerChoice}.`;
+    }
+
+    updateScore();
+}
+
+function getComputerChoice() {
+    const randomIndex = Math.floor(Math.random() * 3);
+    return choices[randomIndex];
+}
+
+function getResult(player, computer) {
+    if (player === computer) return "draw";
+
+    if (
+        (player === "rock" && computer === "scissors") ||
+        (player === "paper" && computer === "rock") ||
+        (player === "scissors" && computer === "paper")
+    ) {
+        return "win";
+    } else {
+        return "lose";
+    }
+}
+
+function updateScore() {
+    playerScoreDisplay.textContent = playerScore;
+    computerScoreDisplay.textContent = computerScore;
+}
+
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
